@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useWallet } from '../lib/wallet-context';
 import { getPayment, raiseDispute, release, resolveDispute } from 'trestly-sdk';
 import { trestlyConfig } from '../lib/trestly-config';
@@ -17,7 +17,7 @@ export default function PaymentStatusCard({ paymentId }: PaymentStatusCardProps)
   const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const loadPayment = async () => {
+  const loadPayment = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -28,7 +28,7 @@ export default function PaymentStatusCard({ paymentId }: PaymentStatusCardProps)
     } finally {
       setLoading(false);
     }
-  };
+  }, [paymentId]);
 
   useEffect(() => {
     // Standard fetch-on-mount/prop-change pattern; loadPayment sets loading
@@ -37,7 +37,7 @@ export default function PaymentStatusCard({ paymentId }: PaymentStatusCardProps)
     // react.dev itself documents for effect-driven data fetching.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadPayment();
-  }, [paymentId]);
+  }, [loadPayment]);
 
   const handleRaiseDispute = async () => {
     if (!isConnected || !address || !payment) return;

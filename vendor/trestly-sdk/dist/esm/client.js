@@ -32,7 +32,7 @@ export async function createPayment(config, params) {
     // Sign via callback
     const signedXdr = await params.signTransaction(xdr);
     // Submit and confirm
-    const txHash = await submitAndConfirm(server, signedXdr);
+    const txHash = await submitAndConfirm(server, signedXdr, config.networkPassphrase);
     // Parse payment ID from transaction result
     const txResult = await server.getTransaction(txHash);
     if (txResult.status !== "SUCCESS" || !txResult.returnValue) {
@@ -58,7 +58,7 @@ export async function raiseDispute(config, params) {
     const { transaction, server } = await buildContractTransaction(config, params.payer, "raise_dispute", contractParams);
     const xdr = await simulateTransaction(server, transaction);
     const signedXdr = await params.signTransaction(xdr);
-    const txHash = await submitAndConfirm(server, signedXdr);
+    const txHash = await submitAndConfirm(server, signedXdr, config.networkPassphrase);
     return { txHash };
 }
 /**
@@ -78,7 +78,7 @@ export async function release(config, paymentId, submitterAccount, signTransacti
     const { transaction, server } = await buildContractTransaction(config, submitterAccount, "release", contractParams);
     const xdr = await simulateTransaction(server, transaction);
     const signedXdr = await signTransaction(xdr);
-    const txHash = await submitAndConfirm(server, signedXdr);
+    const txHash = await submitAndConfirm(server, signedXdr, config.networkPassphrase);
     return { txHash };
 }
 /**
@@ -99,7 +99,7 @@ export async function resolveDispute(config, params) {
     const { transaction, server } = await buildContractTransaction(config, params.arbiter, "resolve_dispute", contractParams);
     const xdr = await simulateTransaction(server, transaction);
     const signedXdr = await params.signTransaction(xdr);
-    const txHash = await submitAndConfirm(server, signedXdr);
+    const txHash = await submitAndConfirm(server, signedXdr, config.networkPassphrase);
     return { txHash };
 }
 /**

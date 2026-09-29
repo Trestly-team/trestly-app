@@ -83,7 +83,7 @@ npm run lint     # run ESLint
 npm run build    # produce an optimized production build
 ```
 
-Pull requests and pushes to `main` run lint and production-build checks in GitHub Actions. The `main` branch is protected. The companion contract has 12 Rust tests, and the SDK has 8 TypeScript tests covering its transaction and parsing helpers. See [Testing](docs/developer/testing.md) for the complete verification flow.
+Pull requests and pushes to `main` run lint and production-build checks in GitHub Actions. The companion contract has 12 Rust tests, and the SDK has TypeScript tests covering its transaction and parsing helpers. See [Testing](docs/developer/testing.md) for the complete verification flow.
 
 ## Documentation
 
@@ -115,3 +115,8 @@ Issues, documentation improvements, tests, and integrations are welcome. Read [C
 ## License
 
 Licensed under the [MIT License](LICENSE).
+
+## Security
+
+Review the [security policy](SECURITY.md) before reporting a vulnerability or
+using this testnet reference app with a wallet.

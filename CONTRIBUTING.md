@@ -70,8 +70,8 @@ properly (removing the need for this) is a tracked open issue.
 3. If you touch a wallet-connected flow, test it manually with Freighter —
    there's no automated test suite for this repo yet (also a tracked open
    issue).
-4. Open a PR against `main`. CI must pass and the PR needs one approving
-   review before it can merge (branch protection is on).
+4. Open a PR against `main`. CI must pass before review and merge. See the
+   repository settings for the current branch-protection policy.
 
 ## Reporting issues
 

@@ -39,7 +39,7 @@ async function createPayment(config, params) {
     // Sign via callback
     const signedXdr = await params.signTransaction(xdr);
     // Submit and confirm
-    const txHash = await (0, contract_js_1.submitAndConfirm)(server, signedXdr);
+    const txHash = await (0, contract_js_1.submitAndConfirm)(server, signedXdr, config.networkPassphrase);
     // Parse payment ID from transaction result
     const txResult = await server.getTransaction(txHash);
     if (txResult.status !== "SUCCESS" || !txResult.returnValue) {
@@ -65,7 +65,7 @@ async function raiseDispute(config, params) {
     const { transaction, server } = await (0, contract_js_1.buildContractTransaction)(config, params.payer, "raise_dispute", contractParams);
     const xdr = await (0, contract_js_1.simulateTransaction)(server, transaction);
     const signedXdr = await params.signTransaction(xdr);
-    const txHash = await (0, contract_js_1.submitAndConfirm)(server, signedXdr);
+    const txHash = await (0, contract_js_1.submitAndConfirm)(server, signedXdr, config.networkPassphrase);
     return { txHash };
 }
 /**
@@ -85,7 +85,7 @@ async function release(config, paymentId, submitterAccount, signTransaction) {
     const { transaction, server } = await (0, contract_js_1.buildContractTransaction)(config, submitterAccount, "release", contractParams);
     const xdr = await (0, contract_js_1.simulateTransaction)(server, transaction);
     const signedXdr = await signTransaction(xdr);
-    const txHash = await (0, contract_js_1.submitAndConfirm)(server, signedXdr);
+    const txHash = await (0, contract_js_1.submitAndConfirm)(server, signedXdr, config.networkPassphrase);
     return { txHash };
 }
 /**
@@ -106,7 +106,7 @@ async function resolveDispute(config, params) {
     const { transaction, server } = await (0, contract_js_1.buildContractTransaction)(config, params.arbiter, "resolve_dispute", contractParams);
     const xdr = await (0, contract_js_1.simulateTransaction)(server, transaction);
     const signedXdr = await params.signTransaction(xdr);
-    const txHash = await (0, contract_js_1.submitAndConfirm)(server, signedXdr);
+    const txHash = await (0, contract_js_1.submitAndConfirm)(server, signedXdr, config.networkPassphrase);
     return { txHash };
 }
 /**

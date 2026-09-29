@@ -48,9 +48,8 @@ async function simulateTransaction(server, transaction) {
 /**
  * Submit a signed transaction and wait for confirmation
  */
-async function submitAndConfirm(server, signedXdr) {
-    const signedTx = stellar_sdk_1.TransactionBuilder.fromXDR(signedXdr, stellar_sdk_1.Networks.TESTNET // This will be overridden by the actual network
-    );
+async function submitAndConfirm(server, signedXdr, networkPassphrase) {
+    const signedTx = stellar_sdk_1.TransactionBuilder.fromXDR(signedXdr, networkPassphrase);
     const result = await server.sendTransaction(signedTx);
     if (result.status === "ERROR") {
         throw new Error(`Transaction failed: ${result.errorResult?.toXDR("base64")}`);

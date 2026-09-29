@@ -8,9 +8,14 @@ Trestly provides escrow protection for x402 payments. Instead of paying a seller
 
 ## Installation
 
+The SDK is not published to npm yet. Install it directly from the repository:
+
 ```bash
-npm install trestly-sdk
+npm install "git+https://github.com/Trestly-team/trestly-sdk.git#main"
 ```
+
+The `prepare` script builds the package during Git installation. The frontend
+uses a versioned vendored build while npm publication is pending.
 
 ## Quick Start
 
@@ -21,7 +26,7 @@ import { wrapX402Payment } from "trestly-sdk";
 import { freighter } from "@stellar/freighter-api";
 
 const config = {
-  contractId: "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
+  contractId: "CBL4JVIPQBSTGUUVQRZXHDCGCVDPN3N4MHJKKY4MZSM2ZBILIIUJR6WD",
   rpcUrl: "https://soroban-testnet.stellar.org",
   networkPassphrase: "Test SDF Network ; September 2015",
 };
@@ -43,6 +48,9 @@ console.log(`Transaction hash: ${result.txHash}`);
 
 **Important**: This changes the payment recipient from "seller directly" to "the Trestly contract, on the seller's behalf, pending the dispute window."
 
+For the full request-to-settlement lifecycle, see the [x402 integration
+guide](docs/INTEGRATION.md).
+
 ## Configuration
 
 All functions require a `TrestlyConfig` object:
@@ -60,17 +68,12 @@ Example configurations:
 ```typescript
 // Testnet
 const testnetConfig = {
-  contractId: "CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD2KM",
+  contractId: "CBL4JVIPQBSTGUUVQRZXHDCGCVDPN3N4MHJKKY4MZSM2ZBILIIUJR6WD",
   rpcUrl: "https://soroban-testnet.stellar.org",
   networkPassphrase: "Test SDF Network ; September 2015",
 };
 
-// Mainnet (when deployed)
-const mainnetConfig = {
-  contractId: "YOUR_CONTRACT_ID",
-  rpcUrl: "https://soroban-mainnet.stellar.org",
-  networkPassphrase: "Public Global Stellar Network ; September 2015",
-};
+// Mainnet is not supported until Trestly has a reviewed mainnet deployment.
 ```
 
 ## Core Functions
@@ -165,6 +168,10 @@ const result = await release(
 
 console.log(`Payment released: ${result.txHash}`);
 ```
+
+> Soroban contracts do not run on a timer. After the dispute window, a
+> fee-paying account must submit `release`; the contract never settles a
+> payment by itself.
 
 ## Signing Transactions
 

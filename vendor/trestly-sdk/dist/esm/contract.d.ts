@@ -18,7 +18,7 @@ export declare function simulateTransaction(server: rpc.Server, transaction: Tra
 /**
  * Submit a signed transaction and wait for confirmation
  */
-export declare function submitAndConfirm(server: rpc.Server, signedXdr: string): Promise<string>;
+export declare function submitAndConfirm(server: rpc.Server, signedXdr: string, networkPassphrase: string): Promise<string>;
 /**
  * Parse EscrowedPayment from contract return value
  */

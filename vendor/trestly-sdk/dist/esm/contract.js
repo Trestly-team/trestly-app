@@ -2,7 +2,7 @@
  * Trestly contract interface bindings
  * Matches the trestly-contract spec exactly
  */
-import { Contract, rpc, TransactionBuilder, BASE_FEE, Networks, scValToNative, nativeToScVal, Address, } from "@stellar/stellar-sdk";
+import { Contract, rpc, TransactionBuilder, BASE_FEE, scValToNative, nativeToScVal, Address, } from "@stellar/stellar-sdk";
 /**
  * Build a transaction for the Trestly contract
  */
@@ -36,9 +36,8 @@ export async function simulateTransaction(server, transaction) {
 /**
  * Submit a signed transaction and wait for confirmation
  */
-export async function submitAndConfirm(server, signedXdr) {
-    const signedTx = TransactionBuilder.fromXDR(signedXdr, Networks.TESTNET // This will be overridden by the actual network
-    );
+export async function submitAndConfirm(server, signedXdr, networkPassphrase) {
+    const signedTx = TransactionBuilder.fromXDR(signedXdr, networkPassphrase);
     const result = await server.sendTransaction(signedTx);
     if (result.status === "ERROR") {
         throw new Error(`Transaction failed: ${result.errorResult?.toXDR("base64")}`);
