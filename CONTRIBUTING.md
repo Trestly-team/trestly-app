@@ -28,6 +28,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```bash
 npm run lint
+npm run typecheck
 npm run build
 ```
 

@@ -1,0 +1,26 @@
+name: App bug report
+description: Report a reproducible problem in the wallet-connected frontend.
+title: "bug(app): "
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the screen, action, expected result, and actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Do not share private keys, seed phrases, or signed transaction XDR.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Browser, wallet version, and Stellar network
+    validations:
+      required: true
